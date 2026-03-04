@@ -91,7 +91,7 @@ export default function Hero() {
           >
             <div className="h-px w-12 bg-neutral-300 dark:bg-neutral-700" />
             <span className="text-sm font-bold uppercase tracking-[0.3em] text-neutral-500 dark:text-neutral-400">
-              Akuété Claude Aboki
+              Akuete Claude Aboki
             </span>
             <div className="h-px w-12 bg-neutral-300 dark:bg-neutral-700" />
           </motion.div>

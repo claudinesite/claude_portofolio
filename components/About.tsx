@@ -63,10 +63,10 @@ export default function About() {
           {/* Intro text */}
           <div>
             <h3 className="text-2xl font-bold text-neutral-900 dark:text-white mb-1">
-              Claude Akuété Aboki
+              Claude Akuete Aboki
             </h3>
             <p className="text-blue-700 dark:text-blue-400 font-medium mb-3">
-              Analyste BI & Scientifique de Données · Montréal, QC 🇨🇦
+              Analyste BI & Scientifique de Données · Montréal, QC CA
             </p>
             <p className="text-neutral-500 dark:text-neutral-400 leading-relaxed max-w-xl">
               J'aime <span className="text-neutral-900 dark:text-white font-medium">comprendre, structurer et raconter</span> les données.

@@ -16,7 +16,6 @@ import {
     ChevronRight,
     Database,
     PieChart,
-
 } from 'lucide-react';
 import {
     SiPython,
@@ -54,7 +53,7 @@ interface CareerItem {
     role: string;
     place: string;
     year: string;
-    description: string;
+    description: string[];
     technologies?: string[];
 }
 
@@ -73,21 +72,37 @@ const careerData: Record<string, CareerSection> = {
                 role: "Analyste d'affaires BI",
                 place: 'Norda Stelo',
                 year: '2023 — 2026',
-                description: "Conception de solutions BI, tableaux de bord Power BI, accompagnement client et valorisation des données.",
+                description: [
+                    "Accompagner les clients dans la définition de leurs besoins et les conseiller dans le choix et l'implantation de solutions analytiques",
+                    "Concevoir, développer et maintenir des solutions BI incluant des rapports, tableaux de bord et KPI",
+                    "Produire et maintenir la documentation technique des solutions analytiques",
+                    "Construire et faire évoluer des rapports complexes à l'aide de Power BI, SQL et Python",
+                    "Assurer la qualité, la cohérence et la fiabilité des données utilisées dans les solutions analytiques",
+                    "Création des entrepôts de données, des datamarts, des dataflows et collaboration étroite avec les parties techniques et non techniques"
+                ],
                 technologies: ['Power BI', 'DAX', 'SQL Server', 'Azure', 'Python', 'Excel']
             },
             {
-                role: "Analyste d'affaires BI",
+                role: "Analyste d'intelligence d'affaires",
                 place: 'Planifika',
                 year: '2022 — 2023',
-                description: "Développement de pipelines ETL, rapports Power BI et modélisation de données pour la prise de décision.",
+                description: [
+                    "Analyser les besoins d'affaires et les traduire en exigences fonctionnelles et techniques",
+                    "Modéliser, nettoyer et transformer des données pour le processus décisionnel",
+                    "Création des tableaux de bord avec Power BI",
+                    "Développement de pipelines ETL",
+                    "Assurer la qualité, l'intégrité, la cohérence et la sécurité des données utilisées"
+                ],
                 technologies: ['Power BI', 'ETL', 'SQL Server', 'Python', 'Pandas']
             },
             {
                 role: "Assistant-statisticien",
                 place: 'CCNB',
                 year: '2019',
-                description: "Analyse statistique de données de sondage, nettoyage de données et rédaction de rapports.",
+                description: [
+                    "Analyse statistique de données de sondage",
+                    "Nettoyage de données et rédaction de rapports"
+                ],
                 technologies: ['R', 'Excel', 'Python', 'SPSS']
             },
         ],
@@ -100,19 +115,19 @@ const careerData: Record<string, CareerSection> = {
                 role: "Maîtrise en génie des technologies de l'information",
                 place: 'École de technologie supérieure (ETS) - Montréal',
                 year: '2024 — 2026',
-                description: "Spécialisation en intelligence d'affaires, gestion des données et recherche appliquée."
+                description: ["Spécialisation en intelligence d'affaires, gestion des données et recherche appliquée."]
             },
             {
                 role: "Analyste des données statistiques (BIG DATA)",
                 place: 'Collège communautaire du Nouveau-Brunswick (CCNB) - Bathurst',
                 year: '2017 — 2019',
-                description: "Formation en analyse statistique, informatique décisionnelle et traitement de données massives."
+                description: ["Formation en analyse statistique, informatique décisionnelle et traitement de données massives."]
             },
             {
                 role: "Baccalauréat en informatique de gestion",
-                place: 'École des sciences de la gestion (ESGIS) Avec équivalence WES pour le Canada',
+                place: 'École des sciences de la gestion (ESGIS) - Équivalence WES Canada',
                 year: '2016',
-                description: "WES (numéro de référence : 5900849)"
+                description: ["WES (numéro de référence : 5900849)"]
             },
         ],
     },
@@ -121,16 +136,22 @@ const careerData: Record<string, CareerSection> = {
         label: 'Certifications',
         items: [
             {
-                role: "Microsoft Power BI",
+                role: "Microsoft Power BI Data Analyst",
                 place: 'Microsoft',
                 year: '2022',
-                description: "Certification officielle Microsoft en création de rapports, modélisation DAX et visualisation de données."
+                description: ["Certification officielle Microsoft en création de rapports, modélisation DAX et visualisation de données."]
+            },
+            {
+                role: "Microsoft Certified: Power Platform Fundamentals",
+                place: 'Microsoft',
+                year: '2022',
+                description: ["Certification officielle Microsoft pour l'utilisation de la Power Platform."]
             },
             {
                 role: "Python Data Science",
                 place: 'Udemy',
                 year: '2022',
-                description: "Formation complète en Python pour l'analyse de données, pandas, numpy et machine learning."
+                description: ["Formation complète en Python pour l'analyse de données, pandas, numpy et machine learning."]
             },
         ],
     },
@@ -138,18 +159,18 @@ const careerData: Record<string, CareerSection> = {
 
 // Map des couleurs pour les technologies
 const techColors: Record<string, string> = {
-    'Power BI': '#150458',
-    'DAX': '#150458',
-    'SQL Server': '#150458',
-    'Azure': '#150458',
-    'Python': '#150458',
-    'Excel': '#150458',
-    'ETL': '#150458',
-    'Pandas': '#150458',
-    'R': '#150458',
-    'SPSS': '#150458',
-    'NumPy': '#150458',
-    'Git': '#150458',
+    'Power BI': '#3B82F6',
+    'DAX': '#3B82F6',
+    'SQL Server': '#3B82F6',
+    'Azure': '#3B82F6',
+    'Python': '#3B82F6',
+    'Excel': '#3B82F6',
+    'ETL': '#3B82F6',
+    'Pandas': '#3B82F6',
+    'R': '#3B82F6',
+    'SPSS': '#3B82F6',
+    'NumPy': '#3B82F6',
+    'Git': '#3B82F6',
 };
 
 export default function Career() {
@@ -160,10 +181,11 @@ export default function Career() {
     const activeData = careerData[activeSection];
 
     return (
-        <section id="career" className="py-24 px-6" ref={ref}>
-            <div className="max-w-5xl mx-auto">
+        <section id="career" className="py-24 px-4 md:px-6" ref={ref}>
+            {/* Container élargi */}
+            <div className="max-w-6xl mx-auto">
 
-                {/* ===== SKILLS SECTION (avec couleurs) ===== */}
+                {/* ===== SKILLS SECTION ===== */}
                 <div className="mb-20">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -182,7 +204,7 @@ export default function Career() {
                         </span>
                     </motion.div>
 
-                    {/* Skills Marquee avec couleurs */}
+                    {/* Skills Marquee */}
                     <div className="relative overflow-hidden">
                         <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white dark:from-[#050505] to-transparent z-10 pointer-events-none" />
                         <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white dark:from-[#050505] to-transparent z-10 pointer-events-none" />
@@ -211,7 +233,7 @@ export default function Career() {
                     </div>
                 </div>
 
-                {/* ===== CAREER SECTION (style épuré) ===== */}
+                {/* ===== CAREER SECTION ===== */}
                 <div>
                     {/* Header */}
                     <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
@@ -227,7 +249,6 @@ export default function Career() {
                                 Expérience & Formation
                             </h2>
                         </motion.div>
-
                     </div>
 
                     {/* Navigation Tabs */}
@@ -246,12 +267,12 @@ export default function Career() {
                                     key={key}
                                     onClick={() => setActiveSection(key)}
                                     className={`
-                    relative flex items-center gap-2 px-4 py-2 rounded-md text-sm transition-all duration-300
-                    ${isActive
+                                        relative flex items-center gap-2 px-4 py-2 rounded-md text-sm transition-all duration-300
+                                        ${isActive
                                             ? 'text-neutral-900 dark:text-white'
                                             : 'text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300'
                                         }
-                  `}
+                                    `}
                                 >
                                     {isActive && (
                                         <motion.div
@@ -267,7 +288,7 @@ export default function Career() {
                         })}
                     </motion.div>
 
-                    {/* Timeline Content */}
+                    {/* Timeline Content - Élargi */}
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={activeSection}
@@ -287,53 +308,66 @@ export default function Career() {
                                         initial={{ opacity: 0, x: -20 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: i * 0.1 }}
-                                        className="relative pl-8 group"
+                                        className="relative pl-10 group"
                                     >
                                         {/* Timeline Dot */}
                                         <div className="absolute left-0 top-2 w-[15px] h-[15px] rounded-full border-2 border-neutral-300 dark:border-neutral-700 bg-white dark:bg-[#050505] group-hover:border-neutral-900 dark:group-hover:border-white transition-colors duration-300" />
 
-                                        {/* Content */}
-                                        <div className="pb-8 border-b border-neutral-100 dark:border-neutral-800/50 last:border-0 last:pb-0">
-                                            {/* Year */}
-                                            <span className="text-[11px] font-mono text-neutral-400 uppercase tracking-wider">
-                                                {item.year}
-                                            </span>
+                                        {/* Content - Card élargie */}
+                                        <div className="pb-10 mb-2">
+                                            <div className="p-6 bg-neutral-50 dark:bg-neutral-900 rounded-2xl border border-neutral-100 dark:border-neutral-800 hover:border-neutral-200 dark:hover:border-neutral-700 transition-colors">
 
-                                            {/* Role & Place */}
-                                            <h3 className="text-lg font-medium text-neutral-900 dark:text-white mt-1 group-hover:translate-x-1 transition-transform duration-300">
-                                                {item.role}
-                                            </h3>
-                                            <p className="text-sm text-neutral-500 mt-0.5">
-                                                {item.place}
-                                            </p>
-
-                                            {/* Description */}
-                                            <p className="text-sm text-neutral-400 leading-relaxed mt-3 max-w-2xl">
-                                                {item.description}
-                                            </p>
-
-                                            {/* Technologies */}
-                                            {item.technologies && item.technologies.length > 0 && (
-                                                <div className="flex flex-wrap gap-2 mt-4">
-                                                    {item.technologies.map((tech, techIndex) => (
-                                                        <span
-                                                            key={techIndex}
-                                                            className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full border transition-all duration-300 hover:scale-105"
-                                                            style={{
-                                                                borderColor: `${techColors[tech] || '#6b7280'}30`,
-                                                                backgroundColor: `${techColors[tech] || '#6b7280'}10`,
-                                                                color: techColors[tech] || '#6b7280',
-                                                            }}
-                                                        >
-                                                            <span
-                                                                className="w-1.5 h-1.5 rounded-full"
-                                                                style={{ backgroundColor: techColors[tech] || '#6b7280' }}
-                                                            />
-                                                            {tech}
-                                                        </span>
-                                                    ))}
+                                                {/* Header */}
+                                                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-4">
+                                                    <div>
+                                                        <h3 className="text-xl font-semibold text-neutral-900 dark:text-white">
+                                                            {item.role}
+                                                        </h3>
+                                                        <p className="text-sm text-neutral-500 mt-1">
+                                                            {item.place}
+                                                        </p>
+                                                    </div>
+                                                    <span className="text-xs font-mono text-neutral-400 bg-neutral-200 dark:bg-neutral-800 px-3 py-1 rounded-full whitespace-nowrap w-fit">
+                                                        {item.year}
+                                                    </span>
                                                 </div>
-                                            )}
+
+                                                {/* Description - Liste à puces */}
+                                                <ul className="space-y-2 mb-5">
+                                                    {item.description.map((desc, descIndex) => (
+                                                        <li
+                                                            key={descIndex}
+                                                            className="flex items-start gap-3 text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed"
+                                                        >
+                                                            <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 shrink-0" />
+                                                            {desc}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+
+                                                {/* Technologies */}
+                                                {item.technologies && item.technologies.length > 0 && (
+                                                    <div className="flex flex-wrap gap-2 pt-4 border-t border-neutral-200 dark:border-neutral-800">
+                                                        {item.technologies.map((tech, techIndex) => (
+                                                            <span
+                                                                key={techIndex}
+                                                                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full border transition-all duration-300 hover:scale-105"
+                                                                style={{
+                                                                    borderColor: `${techColors[tech] || '#6b7280'}30`,
+                                                                    backgroundColor: `${techColors[tech] || '#6b7280'}10`,
+                                                                    color: techColors[tech] || '#6b7280',
+                                                                }}
+                                                            >
+                                                                <span
+                                                                    className="w-1.5 h-1.5 rounded-full"
+                                                                    style={{ backgroundColor: techColors[tech] || '#6b7280' }}
+                                                                />
+                                                                {tech}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                )}
+                                            </div>
                                         </div>
                                     </motion.div>
                                 ))}
